@@ -134,14 +134,44 @@ print(<span class="editable-arg">'Wiggle Finished'</span>)
                 motor.run_right(<span class="editable-arg">50</span>)
                 <div class="snippet-expl">Starts spinning the right side of the dual motor.</div>
               </div>
+                <div class="snippet" draggable="true">
+                motor.run_to(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Sends motor to degree position inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_to_left(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Sends left side of the dual motor to degree position inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_to_right(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Sends right side of the dual motor to degree position inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_angle(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Moves the motor the number of degrees inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_angle(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Moves the motor the number of degrees inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_angle_left(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Moves left side of the dual motor the number of degrees inside the ().</div>
+              </div>
+                <div class="snippet" draggable="true">
+                motor.run_angle_right(<span class="editable-arg">180</span>)
+                <div class="snippet-expl">Moves right side of the dual motor the number of degrees inside the ().</div>
+              </div>
               <div class="snippet" draggable="true">
                 motor.stop()
                 <div class="snippet-expl">Stops the motor.</div>
               </div>
+            <!---
               <div class="snippet" draggable="true">
                 motor.set_speed(<span class="editable-arg">50</span>)
                 <div class="snippet-expl">Sets motor speed to the percentage inside the ().</div>
               </div>
+                --->
               <div class="snippet" draggable="true">
                 motor.angle
                 <div class="snippet-expl">Returns the motor's current angle (0–359).</div>
