@@ -98,6 +98,20 @@
           <!-- Snippet Bank -->
           <div id="bank">
             <div id="snippets">
+<div class="snippet" draggable="true">
+print(<span class="editable-arg">'Wiggle Motor!'</span>)
+motor.run(<span class="editable-arg">50</span>)
+time.sleep(<span class="editable-arg">1</span>)
+motor.run(<span class="editable-arg">-50</span>)
+time.sleep(<span class="editable-arg">1</span>)
+motor.run(<span class="editable-arg">50</span>)
+time.sleep(<span class="editable-arg">1</span>)
+motor.run(<span class="editable-arg">-50</span>)
+time.sleep(<span class="editable-arg">1</span>)
+motor.stop()
+print(<span class="editable-arg">'Wiggle Finished'</span>)
+<div class="snippet-expl">Wiggles a motor back and forth.</div>
+              </div>
               <div class="snippet" draggable="true">
                 print(<span class="editable-arg">'hello!'</span>)
                 <div class="snippet-expl">Prints whatever is inside the () in the REPL.</div>
@@ -137,20 +151,6 @@
               <div class="snippet" draggable="true">
                 channel.send(<span class="editable-arg">'message'</span>)
                 <div class="snippet-expl">Sends a message to the current channel.</div>
-              </div>
-<div class="snippet" draggable="true">
-print(<span class="editable-arg">'Wiggle Motor!'</span>)
-motor.run(<span class="editable-arg">50</span>)
-time.sleep(<span class="editable-arg">1</span>)
-motor.run(<span class="editable-arg">-50</span>)
-time.sleep(<span class="editable-arg">1</span>)
-motor.run(<span class="editable-arg">50</span>)
-time.sleep(<span class="editable-arg">1</span>)
-motor.run(<span class="editable-arg">-50</span>)
-time.sleep(<span class="editable-arg">1</span>)
-motor.stop()
-print(<span class="editable-arg">'Wiggle Finished'</span>)
-<div class="snippet-expl">Wiggles a motor back and forth.</div>
               </div>
             </div>
           </div>
