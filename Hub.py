@@ -32,7 +32,7 @@ HubHTML = '''
     <td> </td>
   </tr>
 </table>
-<div style = 'color:#0000FF; width: 800px; font-size: 9px' id = "activity{num}"></div>
+<div style = 'visibility: hidden; color:#0000FF; width: 800px; font-size: 9px' id = "activity{num}"></div>
 '''
 
 import SpikePrime as hub0
