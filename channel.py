@@ -135,12 +135,12 @@ class CEEO_Channel:
             <br>
 
             <div class="channel-row">
-                <span class="channel-label">Start program when I receive:</span>
+                <span class="channel-label">Trigger script when channel receives:</span>
                 <input id="trigger{suffix}" class="channel-input" value="My turn message">
             </div>
 
             <div class="channel-row">
-                <span class="channel-label">After program finishes, send:</span>
+                <span class="channel-label">After script finishes, send to channel:</span>
                 <input id="posttrigger{suffix}" class="channel-input" value="Next turn message">
             </div>
 
