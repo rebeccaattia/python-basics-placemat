@@ -76,57 +76,55 @@ class Element:
             self.hubType = info['GroupID']
             window.console.log(self.hubType)
             if self.hubType == 512:  # Single Motor
-                def run(speed = None, port = 1, direction = 2):
+                def run(speed = 100, port = 1, direction = 2):
                     if speed != None:
                         self.set_speed(speed, port)
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_run')
-                    val['values']['port'] = port
-                    val['values']['direction'] = direction & 0x03
-                    self._send(fmt, ID, val) 
+                    self._send(fmt, ID, [port,direction]) 
                 
                 def myspeed(speed_value = 100, port = 1): 
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_speed')
-                    val['values']['port'] = port
-                    val['values']['speed'] = speed_value  
-                    self._send(fmt, ID, val) 
+                    self._send(fmt, ID, [port,speed_value]) 
                 
                 def stop(port = 1):  
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_stop')
-                    val['values']['port'] = port
-                    self.set_speed(0, port)
-                
+                    self._send(fmt, ID, [port]) 
+                    
+                def moveAngle(angle = 100, direction = 1):
+                    fmt, ID, val = self._hub.hubInfo.commands.get('motor_angle')
+                    self._send(fmt, ID, [1,angle,direction])
+                    
+                def movePos(pos = 100, direction = 2):
+                    fmt, ID, val = self._hub.hubInfo.commands.get('motor_abs_pos')
+                    self._send(fmt, ID, [1,pos,direction])
+
                 self.run = run
                 self.stop = stop
                 self.set_speed = myspeed  
+                self.move = moveAngle
+                self.angle = movePos
                 
             if self.hubType == 513:  # Double Motor
-                def run(speed = None, port = 1, direction = 2):
+                def run(speed = 100, port = 1, direction = 2):
                     if speed != None:
                         self.set_speed(speed, port)
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_run')
-                    val['values']['port'] = port
-                    val['values']['direction'] = direction & 0x03
-                    self._send(fmt, ID, val) 
+                    self._send(fmt, ID, [port,direction & 0x03]) 
                 
                 def myspeed(speed_value = 100, port = 1): 
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_speed')
-                    val['values']['port'] = port
-                    val['values']['speed'] = speed_value  
-                    self._send(fmt, ID, val) 
+                    self._send(fmt, ID, [port,speed_value]) 
                 
                 def stop(port = 3):  
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_stop')
                     cmds = []
                     if port == 3:
-                        val['values']['port'] = 1
-                        cmds.append((fmt, ID, {'values':{'port':1}})) 
-                        val['values']['port'] = 2
-                        cmds.append((fmt, ID, {'values':{'port':2}})) 
+                        cmds.append((fmt, ID, [1])) 
+                        cmds.append((fmt, ID, [2])) 
                         self._sendMult(cmds) 
                         window.console.log('stopped')
                     else:
-                        val['values']['port'] = port
-                        self._send(fmt, ID, val) 
+                        self._send(fmt, ID, [port]) 
                     
                 def runL(speed = 100):
                     if speed != None:
@@ -143,28 +141,32 @@ class Element:
                     if speed_value != None:
                         cmds = []
                         fmt, ID, val = self._hub.hubInfo.commands.get('motor_speed')
-                        cmds.append((fmt, ID, {'values':{'port':1,'speed':-speed_value}})) 
-                        window.console.log('current val: ',cmds)
-                        cmds.append((fmt, ID, {'values':{'port':2,'speed':speed_value}})) 
-                        window.console.log('current val: ',cmds)
-
-                        '''fmt, ID, val = self._hub.hubInfo.commands.get('motor_speed')
-                        val['values']['port'] = 1
-                        val['values']['speed'] = speed_value  
-                        cmds.append((fmt, ID, val)) 
-                        window.console.log('current val: ',cmds)
-                        val2 = val.copy()
-                        val2['values']['port'] = 2
-                        cmds.append((fmt, ID, val2)) 
-                        window.console.log('current val: ',cmds)'''
+                        cmds.append((fmt, ID, [1,-speed_value])) 
+                        cmds.append((fmt, ID, [2,speed_value])) 
                     fmt, ID, val = self._hub.hubInfo.commands.get('motor_run')
-                    val['values']['port'] = 1
-                    val['values']['direction'] = 1
-                    cmds.append((fmt, ID, {'values':{'port':1,'direction':1}})) 
-                    val['values']['port'] = 2
-                    val['values']['direction'] = 2
-                    cmds.append((fmt, ID, {'values':{'port':2,'direction':1}})) 
+                    cmds.append((fmt, ID, [1,1])) 
+                    cmds.append((fmt, ID, [2,2])) 
                     self._sendMult(cmds) 
+
+                def moveAngle(angle = 100, port = 1, direction = 1):
+                    fmt, ID, val = self._hub.hubInfo.commands.get('motor_angle')
+                    self._send(fmt, ID, [port,angle,direction])
+
+                def moveAngleL(angle = 100, direction = 1):
+                    moveAngle(angle,1, direction)
+                    
+                def moveAngleR(angle = 100, direction = 1):
+                    moveAngle(angle,2, direction)
+                    
+                def movePos(pos = 100, port = 1, direction = 2):
+                    fmt, ID, val = self._hub.hubInfo.commands.get('motor_abs_pos')
+                    self._send(fmt, ID, [port,pos,direction])
+
+                def movePosL(pos = 100, direction = 2):
+                    movePos(pos,1, direction)
+                    
+                def movePosR(pos = 100, direction = 2):
+                    movePos(pos,2, direction)
 
                 self.run = run
                 self.stop = stop
@@ -172,6 +174,11 @@ class Element:
                 self.run_left = runL
                 self.run_right = runR
                 self.run_both = runB
+                self.move_left = moveAngleL
+                self.move_right = moveAngleR
+                self.angle_left = movePosL
+                self.angle_right = movePosR
+                
         except Exception as e:
             window.console.log('Error in _information: ',e)
 
@@ -189,6 +196,7 @@ class Element:
         try:
             for (fmt, ID, val) in cmds:
                 await self._hub.send(fmt, ID, val) 
+                await asyncio.sleep(0.1)
                 window.console.log('sent: ',fmt, ID, val)
             return True
         except asyncio.CancelledError:
@@ -276,6 +284,10 @@ def rename():
 def rename2():
     _e2.value = _e2.value.replace(' ','_')
     exec(f"{_e2.value} = sensor ")
+
+def wait(waitTime):
+    sync.wait(waitTime)
+
 
     
 
