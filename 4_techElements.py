@@ -101,8 +101,8 @@ class Element:
                 self.run = run
                 self.stop = stop
                 self.set_speed = myspeed  
-                self.move = moveAngle
-                self.angle = movePos
+                self.run_angle = moveAngle
+                self.run_to = movePos
                 
             if self.hubType == 513:  # Double Motor
                 def run(speed = 100, port = 1, direction = 2):
@@ -174,10 +174,10 @@ class Element:
                 self.run_left = runL
                 self.run_right = runR
                 self.run_both = runB
-                self.move_left = moveAngleL
-                self.move_right = moveAngleR
-                self.angle_left = movePosL
-                self.angle_right = movePosR
+                self.run_angle_left = moveAngleL
+                self.run_angle_right = moveAngleR
+                self.run_to_left = movePosL
+                self.run_to_right = movePosR
                 
         except Exception as e:
             window.console.log('Error in _information: ',e)
