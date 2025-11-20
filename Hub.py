@@ -172,7 +172,7 @@ class Hub_PS:
         window.console.log(fmt, ID)
         payload = [ID]
         if val:
-            payload.extend(val['values'].values())
+            payload.extend(val)
         message = self.hubInfo.pack(struct.pack(fmt, *payload))
         #packet_size = info['MaxSize']['packet'] if info else len(message) - issue here with TechElements
         packet_size = len(message)  # send the frame in packets of packet_size
@@ -183,8 +183,8 @@ class Hub_PS:
 
     async def feed_rate(self, update = 1000):
         fmt, ID, val = self.hubInfo.commands.get('feed')
-        val['values']['updateTime'] = update
-        await self.send(fmt, ID, val)
+        #val['values']['updateTime'] = update
+        await self.send(fmt, ID, [update])
     
     def my_callback(self, characteristic, data):
         if self.hubInfo.hubType == 'SPIKEPrime':
